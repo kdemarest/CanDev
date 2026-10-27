@@ -1,0 +1,9 @@
+{
+  "id": "edtabs",
+  "name": "Editor Tabs",
+  "version": "0.0.1",
+  "minAppVersion": "1.11.4",
+  "description": "Code-editor-style tabs: one tab per file; opening a file switches to its tab or opens a new one.",
+  "author": "Ken Demarest",
+  "isDesktopOnly": false
+}

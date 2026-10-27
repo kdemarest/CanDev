@@ -1,0 +1,6 @@
+{
+  "path": ["vids", "docs/**"],
+  "outputs": "vids",
+  "candidates": "vids/candidates",
+  "scan": ["vids", "docs/**"]
+}

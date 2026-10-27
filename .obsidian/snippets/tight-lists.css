@@ -1,0 +1,2 @@
+/* Narrower list indent, to save left margin on a phone */
+body { --list-indent: 1em; }

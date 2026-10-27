@@ -1,0 +1,7 @@
+{
+  "provider": "openai",
+  "apiKey": "",
+  "model": "gpt-5.3-codex",
+  "maxIterations": 50,
+  "enableWebSearch": true
+}

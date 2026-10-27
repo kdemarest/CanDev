@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Lint the projects: jslint [paths...]  (default: gptviz movi modl edtabs layout travel deps tools).
+# Needs the tool install from setup.sh.
+DEV="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TOOLS_HOME="${DEVENV_TOOLS:-$HOME/.local/share/devenv-tools}"
+cd "$DEV" || exit 1
+[ $# -eq 0 ] && set -- gptviz movi modl edtabs layout travel deps tools
+exec node "$TOOLS_HOME/node_modules/eslint/bin/eslint.js" -c "$DEV/tools/eslint.config.js" "$@"

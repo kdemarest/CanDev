@@ -1,0 +1,5 @@
+/* Hide only the pane menu (three dots) in Markdown panes */
+.markdown-source-view .view-actions .clickable-icon[aria-label*="More options"],
+.markdown-reading-view .view-actions .clickable-icon[aria-label*="More options"] {
+  display: none !important;
+}

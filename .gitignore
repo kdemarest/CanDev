@@ -1,0 +1,25 @@
+# Project repos: each is its own repo, cloned by setup.sh.
+/docs/
+/vids/
+/gptviz/
+/movi/
+/modl/
+/aichat/
+/travel/
+/CanopyGrid/
+/layout/
+/deps/
+/OLDaichat/
+
+# Our plugins are built into the vault by setup.sh / build.sh.
+/.obsidian/plugins/gptviz/
+/.obsidian/plugins/movi/
+/.obsidian/plugins/modl/
+/.obsidian/plugins/edtabs/
+
+# Per-device vault state; plugin runtime state and logs.
+/.obsidian/workspace*.json
+/.obsidian/plugins/*/chat-state.json
+/.obsidian/plugins/*/agents-path.txt
+*.log
+.trash/
