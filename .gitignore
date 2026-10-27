@@ -9,14 +9,14 @@
 /CanopyGrid/
 /layout/
 /deps/
-/gptchat/
+/ObAiChat/
 
 # Our plugins are built into the vault by setup.sh / build.sh.
 /.obsidian/plugins/gptviz/
 /.obsidian/plugins/movi/
 /.obsidian/plugins/modl/
 /.obsidian/plugins/edtabs/
-/.obsidian/plugins/gptchat/
+/.obsidian/plugins/obaichat/
 
 # Third-party plugins come from Obsidian's Community plugins (README.md, New phone): only their
 # settings are kept here. Installed but unused ones are left out altogether.
