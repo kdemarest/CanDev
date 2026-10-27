@@ -13,7 +13,7 @@ GIT_REPOS="$HOME/git-repos"
 TOOLS_HOME="$HOME/.local/share/devenv-tools"
 GITHUB="https://github.com/kdemarest"
 # folder:repo where they differ
-PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps gptchat)
+PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps gptchat:ObAiChat)
 PLUGINS=(gptviz movi modl edtabs gptchat)
 
 for cmd in git node npm python3 magick gh glslangValidator; do

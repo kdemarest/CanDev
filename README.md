@@ -12,7 +12,7 @@ Obsidian vault and workspace for the game-movie projects, plus travel planning. 
 | `layout/` | kdemarest/CanLayout | web app: view Unity areas, compose scenes (`runLayout`) |
 | `deps/` | kdemarest/CanDeps | what is out of date across the projects, and why (`deps/status.md`); its page builds what you tick (`runDeps`, http://localhost:8070/) |
 | `aichat/` | kdemarest/aichat | plugin: Claude CLI in the browser (on hold; docs only so far) |
-| `gptchat/` | kdemarest/gptchat | plugin: ChatGPT inside Obsidian (was OLDaichat; based on Chatting with AI) |
+| `gptchat/` | kdemarest/ObAiChat | plugin: ChatGPT inside Obsidian (was OLDaichat; based on Chatting with AI) |
 | `travel/` | kdemarest/WorldTravel | trip maps, a separate project (not Canopy): one dot per day of a trip (`runTravel`) |
 | `CanopyGrid/` | kdemarest/CanopyGrid | Unity project that cut Canopy's trees into grid chunks (Dicer, Mantis LOD); reference for `layout/tools/dice.js` and `mantis.js`. Canopy holds the authoritative sources |
 | `edtabs/` | kdemarest/CanDev (this repo) | plugin: code-editor-style tabs, one tab per file |
