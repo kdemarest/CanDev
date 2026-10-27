@@ -9,13 +9,22 @@
 /CanopyGrid/
 /layout/
 /deps/
-/OLDaichat/
+/gptchat/
 
 # Our plugins are built into the vault by setup.sh / build.sh.
 /.obsidian/plugins/gptviz/
 /.obsidian/plugins/movi/
 /.obsidian/plugins/modl/
 /.obsidian/plugins/edtabs/
+/.obsidian/plugins/gptchat/
+
+# Third-party plugins come from Obsidian's Community plugins (README.md, New phone): only their
+# settings are kept here. Installed but unused ones are left out altogether.
+/.obsidian/plugins/*/*
+!/.obsidian/plugins/*/data.json
+/.obsidian/plugins/cfr-find/
+/.obsidian/plugins/masking-as-md/
+/.obsidian/plugins/obsidian-custom-file-extensions-plugin/
 
 # Per-device vault state; plugin runtime state and logs.
 /.obsidian/workspace*.json

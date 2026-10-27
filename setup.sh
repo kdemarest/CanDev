@@ -13,8 +13,8 @@ GIT_REPOS="$HOME/git-repos"
 TOOLS_HOME="$HOME/.local/share/devenv-tools"
 GITHUB="https://github.com/kdemarest"
 # folder:repo where they differ
-PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps)
-PLUGINS=(gptviz movi modl edtabs)
+PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps gptchat)
+PLUGINS=(gptviz movi modl edtabs gptchat)
 
 for cmd in git node npm python3 magick gh glslangValidator; do
   command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang" >&2; exit 1; }

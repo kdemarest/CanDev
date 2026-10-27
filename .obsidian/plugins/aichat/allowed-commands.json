@@ -1,6 +1,0 @@
-[
-  "python3 tmp_update_prompt_headings.py",
-  "python tmp_update_prompt_headings.py",
-  "wc -c aichat/SPEC.md",
-  "wc -c aichat/ARCH.md"
-]
