@@ -20,6 +20,8 @@ Goal: view a real Canopy area in 3D on the phone and compose landmarks. See `lay
 - [x] Fetch meshes and textures through a throwaway git store, so Canopy's stays lean (2026-10-21)
 - [ ] Ken: run `bash ~/.cache/canopy-shrink/shrink-canopy-git.sh` to bring Canopy's git store from 322 MB back to about 53 MB
 - [ ] Render a few existing objects as a style guide
+- [ ] Leaves waver in the wind: find how expensive it would be, in layout and on the Quest (Ken, 2026-10-29)
+- [ ] Animations for harvesters in layout (Ken, 2026-10-29)
 
 ## 2. Toolchain MVP: export
 
@@ -75,3 +77,16 @@ Goal: view a real Canopy area in 3D on the phone and compose landmarks. See `lay
 
 - [ ] Play-test the Beech ring phantom experiment, then decide where it is documented
 - [ ] Check whether Lod1 meshes give a better poly count for the phone
+- [ ] Spinners keep their clients' collision cheap (Ken, 2026-10-29). A spun part's colliders have no Rigidbody, so PhysX moves static colliders every frame, which may be why 30 spinners cost so much frame time. Ken's design: Spinner.cs turns a client's collision on only when something nearby needs it, and gives it a kinematic Rigidbody whenever a collider that turns is on:
+  - Items: only a hand picking it up needs the collider (Touch's triggers). Thrown items never spin, since an item is thrown only after it's picked up, and RegionHost's region checks are only an editor validation. So the collider is on only while the player is near enough to reach it.
+  - Strictly terrain: the collider is on only while the player is within about 5 m. That covers the head bumping it (Movement, HeadCollider), grabbing to climb, line of sight (almost always enemy to player: Awareness, SearchPhysics), rain cover, dropped loot falling onto it, and thrown or pulsed objects finding it. Mobile harvesters checking the ground (Mobility, Spatial) either ignore spun terrain and pass through (it's very unlikely they'd meet it), or look for spinners near them and ask them to turn their clients' collision on.
+  - Anything else: warn that it doesn't know how to make it cheaper.
+  - What spins today (Claude, 2026-10-29; colliders that turn with it): Daisy's and SawBladeAlone's saw blade (SawBladeLods: a convex mesh on the Terrain layer, though it's a harvester's saw, so "strictly terrain" can't go by layer alone), Major's Spinner (a convex mesh shell, Harvester layer), Mine's Radar (a box and a convex mesh, Harvester layer), PoisonBubble's Model (a sphere, TerrainBonk), Mcguffin's Model (a box, Item), Cairn's WildPortalPiece (a non-convex mesh, Terrain; its spinner is off). Mite's and Flamer's spun parts and Blade's have no colliders, so they already cost nothing. The ring loci weren't resolved.
+  - First, profile 30 spinners with spin on and off on a headset build, to confirm the cost is physics (Physics.Processing).
+  - Mine is deprecated: leave it. Major uses the 5 m rule. (Ken, 2026-10-29)
+  - Ken saw spinners slow long before IcMass or IcVelocity existed, so neither is the cause.
+- [ ] Possibly: IcVelocity always assures a kinematic Rigidbody (Ken, 2026-10-29). Setting an Interactable's velocity on something without a physics-driven Rigidbody adds an IcVelocity, which moves the transform each physics step; with colliders and no Rigidbody, that moves static colliders, the same cost as the spinners. IcVelocity could call AssureRigidbody() when it starts. Ken resisted this once, for a reason he can't recall: find it before doing it (CodeMovesMe's warning that turning a Rigidbody kinematic forces OnTriggerExit, so the touch stack loses the object, may be it).
+- [ ] Chunk loads fire their triggers in quadratic time (Claude, 2026-10-29). `EffectCacheKeyed.FireTriggersAppearingInChunk` (`EffectCache.cs`) gathers the chunk's triggers into a list, checking `list.Contains(trigger)` for each, so it costs the square of the trigger count. Use a HashSet (pooled, like the list) for the check. Profile a biome load first to see how much it costs.
+- [ ] Later: conditions evaluated once per flag change, not once per trigger (Ken, 2026-10-29). Many triggers share a condition (61 Kelp in the Oak all test `Underwater`): cache each condition text's result until the next flag change, except conditions using `this`, `limb` or `myStage`, which depend on the object. Each text already has one compiled program (`MathEval.Compile`, 2026-10-29), the natural place for the cached result.
+- [ ] Run Canopy/Validate MathEval once Unity is back (Claude, 2026-10-29): MathEval's operator fixes and compiled conditions (`MathEval.cs`, `Expression.cs`) haven't been compiled yet; it checks every condition in the open scenes both ways.
+- [ ] Saw blades: split the visual from the collider, so only the visual spins (Ken, 2026-10-29). The blades (SawBladeLods, in Daisy and SawBladeAlone) are disks: spinning one about its axis never changes its collision shape, but Unity doesn't know that and moves the collider every frame. Give the collider its own object that stays still, and let the Spinner turn only the renderers' object.

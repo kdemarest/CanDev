@@ -16,8 +16,8 @@ GITHUB="https://github.com/kdemarest"
 PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps ObAiChat)
 PLUGINS=(gptviz movi modl edtabs ObAiChat)
 
-for cmd in git node npm python3 magick gh glslangValidator; do
-  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang" >&2; exit 1; }
+for cmd in git node npm python3 magick gh glslangValidator mcs; do
+  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang mono" >&2; exit 1; }
 done
 
 if [ -z "$(git config --global user.name || true)" ]; then

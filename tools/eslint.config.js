@@ -67,11 +67,11 @@ module.exports = [
         }
     },
     {
-        // layout's page: plain browser scripts sharing THREE, Space and Surface.
+        // layout's page: plain browser scripts sharing THREE, Space, Surface, Ticker, Tickable and Pfx; its scripts (pfx/, scripts/).
         basePath: DEV,
-        files: ["layout/web/**/*.js"],
+        files: ["layout/web/**/*.js", "layout/pfx/**/*.js", "layout/scripts/**/*.js"],
         ...js.configs.recommended,
-        languageOptions: { ecmaVersion: "latest", sourceType: "script", globals: { ...globals.browser, THREE: "readonly", Space: "writable", Surface: "writable", module: "readonly" } },
+        languageOptions: { ecmaVersion: "latest", sourceType: "script", globals: { ...globals.browser, THREE: "readonly", Space: "writable", Surface: "writable", Ticker: "writable", Tickable: "writable", Pfx: "writable", Conditions: "writable", module: "readonly" } },
         rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
     },
     {
