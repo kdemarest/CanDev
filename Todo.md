@@ -65,7 +65,8 @@ Goal: view a real Canopy area in 3D on the phone and compose landmarks. See `lay
 
 ## Research browser (not Canopy)
 
-- [ ] A small WebView app to browse sites Claude can't read and save pages for it: see [[Research Browser]]. Waiting on a name and a GitHub repo
+- [x] Lens, a WebView app with a Claude chat pane that drives the page: see [[Research Browser]] and `lens/README.md`. Built 2026-11-03
+- [ ] Create the GitHub repo kdemarest/lens, and try Lens on real sites (TripAdvisor first)
 
 ## Housekeeping
 

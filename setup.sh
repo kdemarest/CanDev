@@ -13,11 +13,11 @@ GIT_REPOS="$HOME/git-repos"
 TOOLS_HOME="$HOME/.local/share/devenv-tools"
 GITHUB="https://github.com/kdemarest"
 # folder:repo where they differ
-PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps ObAiChat)
+PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps ObAiChat workout Medical:medical lens)
 PLUGINS=(gptviz movi modl edtabs ObAiChat)
 
-for cmd in git node npm python3 magick gh glslangValidator mcs; do
-  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang mono" >&2; exit 1; }
+for cmd in git node npm python3 magick gh glslangValidator mcs javac aapt aapt2 d8 apksigner; do
+  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang mono openjdk-21 aapt aapt2 d8 apksigner" >&2; exit 1; }
 done
 
 if [ -z "$(git config --global user.name || true)" ]; then
@@ -123,6 +123,17 @@ printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/travel/runTrav
 chmod +x "$HOME/.local/bin/runTravel"
 printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: start the trip map and open it in the browser.\n~/.local/bin/runTravel\n' > "$HOME/.shortcuts/runTravel"
 chmod +x "$HOME/.shortcuts/runTravel"
+# runWorkout serves the workout timer pages (workout/, also on GitHub Pages) locally and opens Ken's; also a widget button.
+printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/workout/runWorkout.sh" "$@"\n' "$DEV" > "$HOME/.local/bin/runWorkout"
+chmod +x "$HOME/.local/bin/runWorkout"
+printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: start the workout timer and open it in the browser.\n~/.local/bin/runWorkout\n' > "$HOME/.shortcuts/runWorkout"
+chmod +x "$HOME/.shortcuts/runWorkout"
+# runLens starts the Lens bridge (lens/: research browser with Claude) and opens the app; also a widget button.
+# The app itself: bash lens/build.sh builds it and opens the installer (Android asks to confirm).
+printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/lens/runLens.sh" "$@"\n' "$DEV" > "$HOME/.local/bin/runLens"
+chmod +x "$HOME/.local/bin/runLens"
+printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: start the Lens bridge and open Lens.\n~/.local/bin/runLens\n' > "$HOME/.shortcuts/runLens"
+chmod +x "$HOME/.shortcuts/runLens"
 
 for p in "${PLUGINS[@]}"; do
   echo "$p: building"

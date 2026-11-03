@@ -67,11 +67,11 @@ module.exports = [
         }
     },
     {
-        // layout's page: plain browser scripts sharing THREE, Space, Surface, Ticker, Tickable and Pfx; its scripts (pfx/, scripts/).
+        // layout's page: plain browser scripts sharing THREE, Space, Surface, Ticker, Tickable, Pfx, Conditions and Environment; its scripts (pfx/, scripts/).
         basePath: DEV,
         files: ["layout/web/**/*.js", "layout/pfx/**/*.js", "layout/scripts/**/*.js"],
         ...js.configs.recommended,
-        languageOptions: { ecmaVersion: "latest", sourceType: "script", globals: { ...globals.browser, THREE: "readonly", Space: "writable", Surface: "writable", Ticker: "writable", Tickable: "writable", Pfx: "writable", Conditions: "writable", module: "readonly" } },
+        languageOptions: { ecmaVersion: "latest", sourceType: "script", globals: { ...globals.browser, THREE: "readonly", Space: "writable", Surface: "writable", Ticker: "writable", Tickable: "writable", Pfx: "writable", Conditions: "writable", Environment: "writable", module: "readonly" } },
         rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
     },
     {
@@ -104,6 +104,38 @@ module.exports = [
         files: ["travel/*.js", "travel/tools/**/*.js"],
         ...js.configs.recommended,
         languageOptions: { ecmaVersion: "latest", sourceType: "commonjs", globals: globals.node },
+        rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
+    },
+    {
+        // workout's pages: plain browser scripts. plan.js defines the helpers, each person's
+        // exercises.js defines the plan, app.js reads both; sw.js is the service worker.
+        basePath: DEV,
+        files: ["workout/**/*.js"],
+        ...js.configs.recommended,
+        languageOptions: {
+            ecmaVersion: "latest", sourceType: "script",
+            globals: { ...globals.browser, steps: "readonly", pair: "readonly", APP_TITLE: "readonly", CAUTION_LABEL: "readonly", PLAN_START: "readonly", WORKOUT_SECTIONS: "readonly", WORKOUT_PHASES: "readonly" }
+        },
+        rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
+    },
+    { basePath: DEV, files: ["workout/plan.js"], languageOptions: { globals: { steps: "off", pair: "off" } } },
+    { basePath: DEV, files: ["workout/*/exercises.js"], languageOptions: { globals: { APP_TITLE: "off", CAUTION_LABEL: "off", PLAN_START: "off", WORKOUT_SECTIONS: "off", WORKOUT_PHASES: "off" } } },
+    { basePath: DEV, files: ["workout/sw.js"], languageOptions: { globals: { ...globals.serviceworker } } },
+    {
+        // lens's bridge: Node, run by runLens; mcp.js is started by claude.
+        basePath: DEV,
+        files: ["lens/bridge/*.js"],
+        ...js.configs.recommended,
+        languageOptions: { ecmaVersion: "latest", sourceType: "commonjs", globals: globals.node },
+        rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
+    },
+    {
+        // lens's chat pane (runs in the app's chat WebView; LensHost is the app's interface) and
+        // agent.js (evaluated in the browsed page).
+        basePath: DEV,
+        files: ["lens/bridge/page/**/*.js"],
+        ...js.configs.recommended,
+        languageOptions: { ecmaVersion: "latest", sourceType: "script", globals: globals.browser },
         rules: { ...js.configs.recommended.rules, "no-unused-vars": ["error", { args: "none", caughtErrors: "none" }] }
     },
     {

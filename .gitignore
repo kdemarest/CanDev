@@ -10,6 +10,8 @@
 /layout/
 /deps/
 /ObAiChat/
+/workout/
+/lens/
 
 # Our plugins are built into the vault by setup.sh / build.sh.
 /.obsidian/plugins/gptviz/
@@ -32,3 +34,6 @@
 /.obsidian/plugins/*/agents-path.txt
 *.log
 .trash/
+
+# Personal medical records: never commit (this repo is public).
+/Medical/
