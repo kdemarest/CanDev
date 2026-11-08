@@ -146,3 +146,26 @@ If you hit the "dubious ownership" error here, run the safe.directory
 command from step 2 for this specific path, then retry.
 
 `setup.sh` does all of this automatically for every project (sections 2, 4, 5).
+
+---
+
+## 6. Canopy: a sparse, shallow, partial clone
+
+The game's Unity repo (`github.com/kdemarest/Canopy`) is gigabytes of art, so
+`/sdcard/Canopy` (beside the workspace, git dir `~/git-repos/Canopy.git`) holds
+only the files listed in `tools/canopy-sparse-checkout` (non-cone patterns:
+code, prefabs, scenes, materials, shaders, a few textures). The clone is
+shallow (`--depth 1`) and blob-less (`--filter=blob:none`): git fetches a
+file's contents only when something reads it (layout fetches meshes this way,
+through a throwaway store; see layout/README.md).
+
+`setup.sh` makes the clone, or re-links files that survived a Termux reinstall
+(keeping their edits), and installs and reapplies the list whenever it changes.
+To change what's checked out, edit `tools/canopy-sparse-checkout` and re-run
+`setup.sh` (reapplying takes about a minute; uncommitted edits are kept).
+Never edit `~/git-repos/Canopy.git/info/sparse-checkout` directly: `setup.sh`
+overwrites it.
+
+The shallow, blob-less clone makes `git ls-tree -l` and `git grep HEAD` slow
+(they fetch every blob); layout's caches (`cache/canopy-sources.json`,
+`cache/guid-index.json`) answer those questions instead.

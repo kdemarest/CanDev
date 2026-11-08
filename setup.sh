@@ -3,6 +3,7 @@
 #   1. Each project repo: cloned if missing; re-linked if its files survived but its git
 #      database did not (e.g. after a Termux reinstall); left alone if already working.
 #      Git databases live in ~/git-repos (sdcard can't hold a real .git); see GITSETUP.md.
+#      Canopy (the game) likewise, beside the workspace, as a sparse checkout (tools/canopy-sparse-checkout).
 #   2. Lint/load-test tools: installed into ~/.local/share/devenv-tools (no node_modules on sdcard).
 #   3. Plugins: built into .obsidian/plugins.
 # Prerequisites: README.md.
@@ -13,12 +14,14 @@ GIT_REPOS="$HOME/git-repos"
 TOOLS_HOME="$HOME/.local/share/devenv-tools"
 GITHUB="https://github.com/kdemarest"
 # folder:repo where they differ
-PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps ObAiChat workout Medical:medical lens)
+PROJECTS=(docs:CanopyDocs vids:canvid layout:CanLayout gptviz movi modl aichat travel:WorldTravel CanopyGrid deps:CanDeps ObAiChat workout Medical:medical lens smash)
 PLUGINS=(gptviz movi modl edtabs ObAiChat)
 
-for cmd in git node npm python3 magick gh glslangValidator mcs javac aapt aapt2 d8 apksigner; do
-  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python imagemagick gh glslang mono openjdk-21 aapt aapt2 d8 apksigner" >&2; exit 1; }
+for cmd in git node npm python3 magick gh glslangValidator mcs javac aapt aapt2 d8 apksigner clang cmake make; do
+  command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python python-numpy imagemagick gh glslang mono openjdk-21 aapt aapt2 d8 apksigner clang cmake make" >&2; exit 1; }
 done
+# modl's model scripts paint their textures with numpy (Termux's package; pip can't build it here)
+python3 -c "import numpy" 2>/dev/null || { echo "Missing numpy. Run: pkg install python-numpy" >&2; exit 1; }
 
 if [ -z "$(git config --global user.name || true)" ]; then
   read -rp "Git user name: " name
@@ -102,10 +105,68 @@ for entry in "${PROJECTS[@]}"; do
   fi
 done
 
+# Canopy, the game (Unity), beside the workspace: a shallow, blob:none clone with a sparse checkout
+# (the whole repo is gigabytes of art), its file list tools/canopy-sparse-checkout; layout fetches
+# other blobs as it needs them. The list is (re)installed and applied whenever it changes.
+CANOPY="$(dirname "$DEV")/Canopy"
+CANOPY_GD="$GIT_REPOS/Canopy.git"
+CANOPY_SPARSE="$DEV/tools/canopy-sparse-checkout"
+git config --global --get-all safe.directory | grep -qxF "$CANOPY" || git config --global --add safe.directory "$CANOPY"
+if [ -d "$CANOPY" ] && git -C "$CANOPY" rev-parse --git-dir >/dev/null 2>&1; then
+  echo "Canopy: ok"
+elif [ -d "$CANOPY_GD" ]; then
+  echo "Canopy: re-pointing to $CANOPY_GD"
+  mkdir -p "$CANOPY"
+  echo "gitdir: $CANOPY_GD" > "$CANOPY/.git"
+else
+  survived=false
+  [ -d "$CANOPY/Assets" ] && survived=true
+  echo "Canopy: cloning (sparse, shallow; only the files tools/canopy-sparse-checkout lists)"
+  mkdir -p "$CANOPY"
+  rm -f "$CANOPY/.git"
+  git -C "$CANOPY" init -q --separate-git-dir="$CANOPY_GD"
+  git -C "$CANOPY" remote add origin "$GITHUB/Canopy.git"
+  git -C "$CANOPY" config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
+  git -C "$CANOPY" config remote.origin.promisor true
+  git -C "$CANOPY" config remote.origin.partialclonefilter blob:none
+  git -C "$CANOPY" sparse-checkout init --no-cone
+  cp "$CANOPY_SPARSE" "$CANOPY_GD/info/sparse-checkout"
+  git -C "$CANOPY" fetch -q --depth 1 --filter=blob:none origin main
+  if $survived; then
+    # Files survived on sdcard (e.g. a Termux reinstall): keep them, uncommitted edits and all.
+    git -C "$CANOPY" symbolic-ref HEAD refs/heads/main
+    git -C "$CANOPY" update-ref refs/heads/main origin/main
+    git -C "$CANOPY" reset -q
+    git -C "$CANOPY" sparse-checkout reapply
+    echo "Canopy: files kept; listed files missing from sdcard show as deleted (git -C $CANOPY status)"
+  else
+    git -C "$CANOPY" checkout -q -B main origin/main
+  fi
+  git -C "$CANOPY" branch -q --set-upstream-to=origin/main main
+fi
+if ! cmp -s "$CANOPY_SPARSE" "$CANOPY_GD/info/sparse-checkout"; then
+  echo "Canopy: applying tools/canopy-sparse-checkout"
+  cp "$CANOPY_SPARSE" "$CANOPY_GD/info/sparse-checkout"
+  git -C "$CANOPY" sparse-checkout reapply
+fi
+
 echo "tools: installing into $TOOLS_HOME"
 mkdir -p "$TOOLS_HOME" "$HOME/.local/bin"
 cp "$DEV/tools/package.json" "$DEV/tools/package-lock.json" "$TOOLS_HOME/"
 (cd "$TOOLS_HOME" && npm ci --no-fund --no-audit --loglevel=error)
+# Arm's ASTC encoder, for layout's compressed textures (layout/tools/texture-astc.js). Termux has no
+# package for it, so it is built from its tag; the version file skips this once done.
+ASTC_TAG=5.7.1
+if [ "$(cat "$TOOLS_HOME/bin/astcenc.version" 2>/dev/null)" != "$ASTC_TAG" ]; then
+  echo "tools: building astcenc $ASTC_TAG"
+  rm -rf "$TOOLS_HOME/src/astc-encoder"
+  mkdir -p "$TOOLS_HOME/src" "$TOOLS_HOME/bin"
+  git clone -q --depth 1 --branch "$ASTC_TAG" -c advice.detachedHead=false https://github.com/ARM-software/astc-encoder.git "$TOOLS_HOME/src/astc-encoder"
+  cmake -S "$TOOLS_HOME/src/astc-encoder" -B "$TOOLS_HOME/src/astc-encoder/build" -DCMAKE_BUILD_TYPE=Release -DASTCENC_ISA_NEON=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ >/dev/null
+  make -C "$TOOLS_HOME/src/astc-encoder/build" -j"$(nproc)" >/dev/null
+  cp "$TOOLS_HOME/src/astc-encoder/build/Source/astcenc-neon" "$TOOLS_HOME/bin/astcenc"
+  echo "$ASTC_TAG" > "$TOOLS_HOME/bin/astcenc.version"
+fi
 # sdcard is mounted noexec, so the command on PATH runs the tracked script through bash.
 printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/tools/jslint" "$@"\n' "$DEV" > "$HOME/.local/bin/jslint"
 chmod +x "$HOME/.local/bin/jslint"
@@ -134,6 +195,9 @@ printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/lens/runLens.s
 chmod +x "$HOME/.local/bin/runLens"
 printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: start the Lens bridge and open Lens.\n~/.local/bin/runLens\n' > "$HOME/.shortcuts/runLens"
 chmod +x "$HOME/.shortcuts/runLens"
+# backupPhone pushes every Canopy repo's uncommitted work to its backup/phone branch (tools/backup.sh); also a widget button.
+printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: push uncommitted Canopy work to backup/phone branches on GitHub.\nbash "%s/tools/backup.sh"\nread -rp "Press Enter to close."\n' "$DEV" > "$HOME/.shortcuts/backupPhone"
+chmod +x "$HOME/.shortcuts/backupPhone"
 
 for p in "${PLUGINS[@]}"; do
   echo "$p: building"

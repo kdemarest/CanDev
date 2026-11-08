@@ -1,0 +1,186 @@
+# Canopy's sparse checkout (non-cone patterns, gitignore syntax): which files of github.com/kdemarest/Canopy
+# are checked out at ../Canopy (git dir ~/git-repos/Canopy.git, a shallow blob:none clone). setup.sh
+# installs this as the clone's info/sparse-checkout and reapplies it when it changes. Edit it here, not
+# there; then run setup.sh (or copy it there and run git -C ../Canopy sparse-checkout reapply).
+# Everything else is fetched on demand (layout reads blobs from git; see layout/README.md).
+*.cs
+*.prefab
+*.cs.meta
+*.prefab.meta
+/Assets/Scenes/*.unity
+/Assets/Meshes/Gem*Lods/
+/Assets/Meshes/GemModels/
+/Assets/EnemyParts/PSD Textures/EnemyParts02_D.psd
+/Assets/EnemyParts/PSD Textures/EnemyParts02_D.psd.meta
+/Assets/EnemyParts/PSD Textures/EnemyParts02_D.png
+/Assets/EnemyParts/PSD Textures/EnemyParts02_D.png.meta
+/Assets/Texture/Clouds.tif
+/Assets/Texture/Clouds.tif.meta
+/Assets/Texture/Clouds.png
+/Assets/Texture/Clouds.png.meta
+/Assets/Texture/DimplesNormal.tif
+/Assets/Texture/DimplesNormal.tif.meta
+/Assets/Texture/DimplesNormal.png
+/Assets/Texture/DimplesNormal.png.meta
+/Assets/Texture/EnergyEffect.tif
+/Assets/Texture/EnergyEffect.tif.meta
+/Assets/Texture/EnergyEffect.png
+/Assets/Texture/EnergyEffect.png.meta
+/Assets/Texture/Engine_Smoke_TextureSheet.tif
+/Assets/Texture/Engine_Smoke_TextureSheet.tif.meta
+/Assets/Texture/Engine_Smoke_TextureSheet.png
+/Assets/Texture/Engine_Smoke_TextureSheet.png.meta
+/Assets/Texture/Explosion.tif
+/Assets/Texture/Explosion.tif.meta
+/Assets/Texture/Explosion.png
+/Assets/Texture/Explosion.png.meta
+/Assets/Texture/ExplosionEmission.tif
+/Assets/Texture/ExplosionEmission.tif.meta
+/Assets/Texture/ExplosionEmission.png
+/Assets/Texture/ExplosionEmission.png.meta
+/Assets/Texture/FireExplosion.tif
+/Assets/Texture/FireExplosion.tif.meta
+/Assets/Texture/FireExplosion.png
+/Assets/Texture/FireExplosion.png.meta
+/Assets/Texture/Jet_Engine_A_TextureSheet.tif
+/Assets/Texture/Jet_Engine_A_TextureSheet.tif.meta
+/Assets/Texture/Jet_Engine_A_TextureSheet.png
+/Assets/Texture/Jet_Engine_A_TextureSheet.png.meta
+/Assets/Texture/Jet_Engine_A_TextureSheet_Lowres.tif
+/Assets/Texture/Jet_Engine_A_TextureSheet_Lowres.tif.meta
+/Assets/Texture/Jet_Engine_A_TextureSheet_Lowres.png
+/Assets/Texture/Jet_Engine_A_TextureSheet_Lowres.png.meta
+/Assets/Texture/Jet_Engine_B_TextureSheet.tif
+/Assets/Texture/Jet_Engine_B_TextureSheet.tif.meta
+/Assets/Texture/Jet_Engine_B_TextureSheet.png
+/Assets/Texture/Jet_Engine_B_TextureSheet.png.meta
+/Assets/Texture/Jet_Engine_B_TextureSheet_Lowres.tif
+/Assets/Texture/Jet_Engine_B_TextureSheet_Lowres.tif.meta
+/Assets/Texture/Jet_Engine_B_TextureSheet_Lowres.png
+/Assets/Texture/Jet_Engine_B_TextureSheet_Lowres.png.meta
+/Assets/Texture/Lightning.tif
+/Assets/Texture/Lightning.tif.meta
+/Assets/Texture/Lightning.png
+/Assets/Texture/Lightning.png.meta
+/Assets/Texture/LightningTrail.tif
+/Assets/Texture/LightningTrail.tif.meta
+/Assets/Texture/LightningTrail.png
+/Assets/Texture/LightningTrail.png.meta
+/Assets/Texture/SmokePuff01.tif
+/Assets/Texture/SmokePuff01.tif.meta
+/Assets/Texture/SmokePuff01.png
+/Assets/Texture/SmokePuff01.png.meta
+/Assets/Texture/SmokePuff04Normal.tif
+/Assets/Texture/SmokePuff04Normal.tif.meta
+/Assets/Texture/SmokePuff04Normal.png
+/Assets/Texture/SmokePuff04Normal.png.meta
+/Assets/Texture/SmokeWaterTx.tif
+/Assets/Texture/SmokeWaterTx.tif.meta
+/Assets/Texture/SmokeWaterTx.png
+/Assets/Texture/SmokeWaterTx.png.meta
+/Assets/Texture/SphereNormal.tif
+/Assets/Texture/SphereNormal.tif.meta
+/Assets/Texture/SphereNormal.png
+/Assets/Texture/SphereNormal.png.meta
+/Assets/Texture/StoneAlbedo.tif
+/Assets/Texture/StoneAlbedo.tif.meta
+/Assets/Texture/StoneAlbedo.png
+/Assets/Texture/StoneAlbedo.png.meta
+/Assets/Texture/StoneNormal.tif
+/Assets/Texture/StoneNormal.tif.meta
+/Assets/Texture/StoneNormal.png
+/Assets/Texture/StoneNormal.png.meta
+/Assets/Texture/VFX_Glow.tif
+/Assets/Texture/VFX_Glow.tif.meta
+/Assets/Texture/VFX_Glow.png
+/Assets/Texture/VFX_Glow.png.meta
+/Assets/Texture/WispySmokeNormal.tif
+/Assets/Texture/WispySmokeNormal.tif.meta
+/Assets/Texture/WispySmokeNormal.png
+/Assets/Texture/WispySmokeNormal.png.meta
+/Assets/Texture/shockwave.tif
+/Assets/Texture/shockwave.tif.meta
+/Assets/Texture/shockwave.png
+/Assets/Texture/shockwave.png.meta
+/Assets/Texture/wispySmoke.tif
+/Assets/Texture/wispySmoke.tif.meta
+/Assets/Texture/wispySmoke.png
+/Assets/Texture/wispySmoke.png.meta
+/Assets/Texture/woodSplintersAlbedo.tif
+/Assets/Texture/woodSplintersAlbedo.tif.meta
+/Assets/Texture/woodSplintersAlbedo.png
+/Assets/Texture/woodSplintersAlbedo.png.meta
+/Assets/EnemyParts/Meshes/Materials/EnemyParts02.mat
+/Assets/EnemyParts/Meshes/Materials/EnemyParts02_D.mat
+/Assets/EnemyParts/PSD Textures.meta
+/Assets/Materials/BullEye.mat
+/Assets/Materials/DramaBeamMat.mat
+/Assets/Materials/HandBloodMat.mat
+/Assets/Materials/MagMineTrailMat.mat
+/Assets/Materials/MojoTrailMat.mat
+/Assets/Materials/Pfx/FireFlyRiseTrailMat.mat
+/Assets/Materials/Pfx/FireFlyTrail.mat
+/Assets/Materials/Pfx/GuardBeam.mat
+/Assets/Materials/Pfx/GuardBeamItem.mat
+/Assets/Materials/Pfx/PickupGlowSeedPfxMat 1.mat
+/Assets/Materials/RingBeamMat.mat
+/Assets/Materials/RingPowerUpMat.mat
+/Assets/Materials/SkyBeamCage.mat
+/Assets/Materials/SkyBeamNewBiome.mat
+/Assets/Materials/SkyBeamOutpost.mat
+/Assets/Materials/SkyBeamTemple.mat
+/Assets/Materials/WaterBulletTrail.mat
+/Assets/Materials/Pfx/Lightning.mat
+/Assets/Materials/Pfx/LightningTinted.mat
+/Assets/Resources/Text/English.txt
+/Assets/Meshes/GridForestTreeBare2/
+/Assets/Meshes/GridForestTree/GridForestTreeCollider.asset
+/Assets/Meshes/Cavern_LOD0.mesh
+/Assets/Meshes/Cavern_LOD0.mesh.meta
+/Assets/Meshes/Tangle_LOD0.mesh
+/Assets/Meshes/Tangle_LOD0.mesh.meta
+/Assets/Shaders/WaterBelow.shader
+/Assets/Shaders/
+# every material (Ken, 2026-11-06: 555 files, 1.7 MB; More Lights phase 3 converts them in place)
+*.mat
+*.mat.meta
+# More Lights phase 3: the switch back to Unity's shaders (layout tools/convert-materials.js writes it)
+/Assets/Resources/ShaderSwitch/
+/Assets/Resources/ShaderSwitch.meta
+/Assets/Active/_RocksBundle/_OldCliffs/Textures/Splinters_albedo.png.meta
+/Assets/Meshes/GridObsidianDagger/GridObsidianDagger_part000_L3.asset
+/Assets/Meshes/GridObsidianDagger/GridObsidianDagger_part000_L4.asset
+/Assets/Meshes/GridObsidianDagger/GridObsidianDagger_part000_L5.asset
+/Assets/Meshes/GridObsidianDagger/GridObsidianDagger_part000_L6.asset
+/Assets/Texture/OD_Dagger_normal.png
+/Assets/Texture/OD_Dagger_normal.png.meta
+/Assets/Meshes/ObsidianDaggerSplit.asset
+/Assets/Meshes/ObsidianDaggerSplit.asset.meta
+/Assets/Materials/DaggerObsidian.mat
+/Assets/Materials/DaggerObsidian.mat.meta
+/Assets/Materials/DaggerHilt.mat
+/Assets/Materials/DaggerHilt.mat.meta
+/Assets/Modl/
+# Canopy root ignore rules (git only honours them when checked out)
+/.gitignore
+# new assets made on the phone (modl families, layout placeholders, leaf LODs, far stand-ins)
+/Assets/Modl.meta
+/Assets/Placeholder/
+/Assets/Placeholder.meta
+/Assets/Assemblages/
+/Assets/Assemblages.meta
+/Assets/Meshes/ForestTreeLeavesLods/
+/Assets/Meshes/ForestTreeLeavesLods.meta
+/Assets/Meshes/TangleHub.asset
+/Assets/Meshes/TangleHub.asset.meta
+# textures whose alpha nothing reads, import alpha set to None (Ken, 2026-11-08)
+/Assets/Active/GamePoly/Circular Saw Blade/Materials/C_Blade_D.tga.meta
+/Assets/Active/_RocksBundle/_OldCliffs/Textures/Cliffs_C1_albedo.png.meta
+/Assets/Active/_RocksBundle/_OldCliffs/Textures/Cliffs_C2_albedo.png.meta
+/Assets/Active/_RocksBundle/_OldCliffs/Textures/Cliffs_C3_albedo.png.meta
+/Assets/Active/_RocksBundle/_OldCliffs/Textures/Cliffs_C4_albedo.png.meta
+/Assets/Texture/Bowl.png.meta
+/Assets/Texture/Humanoids_Diffuse_Yellow.png.meta
+/Assets/Texture/pot_n.png.meta
+/Assets/Texture/StructLoreTablet.png.meta
+/Assets/Texture/Tools B_Tools_1A2_AlbedoTransparency_sRGB.png.meta

@@ -18,11 +18,14 @@ Obsidian vault and workspace for the game-movie projects, plus travel planning. 
 | `workout/` | kdemarest/workout | web app: workout timers for Ken ("Ken Arms" doc) and Lulu ("Rehab Lulu" doc), on GitHub Pages at https://kdemarest.github.io/workout/ (`runWorkout` serves it locally, http://localhost:8095/ken/) |
 | `Medical/` | kdemarest/medical (private) | Ken's and Lulu's medical records, one folder per person and topic; start at `Medical/index.md` |
 | `lens/` | kdemarest/lens | Android app: a research browser with a Claude chat pane; Claude drives the page and has this workspace (`runLens`; build with `bash lens/build.sh`) |
+| `smash/` | kdemarest/smash | Android app: SMS repeater, with AWS Lambdas for email forwarding and logs (Gradle; build scripts are Windows `.cmd`) |
 | `edtabs/` | kdemarest/CanDev (this repo) | plugin: code-editor-style tabs, one tab per file |
 
 `Todo.md` is the roadmap for the whole workspace, in priority order.
 
 This folder itself is the repo kdemarest/CanDev (git dir `~/git-repos/CanDev.git`), which ignores the project folders. It holds what ties them together: `setup.sh`, `tools/` (lint, load test, the shared `resolve.js`), `CLAUDE.md`, the vault config in `.obsidian/`, and `workspace.json`.
+
+Backup: uncommitted work lives only on this phone, so `bash tools/backup.sh` (or the `backupPhone` widget button) pushes a snapshot of each Canopy repo's working tree (Canopy, this folder, layout, modl, docs, vids; or the repos you name) to its `backup/phone` branch on GitHub. It leaves the local branch, index and files alone, never touches `main`, and each run replaces the last snapshot. To restore or test one elsewhere (Unity on the PC): `git fetch origin backup/phone`, then check it out or `git diff main origin/backup/phone`.
 
 `workspace.json` tells gptviz and movi where files are. Notes name files by bare name (`Images: Aeku`, `{#include Reference}`), never by path; `path` lists the folders searched, in order, and `dir/**` includes subfolders. Every generated image goes to `outputs`, candidates to `candidates` (never searched), and `scan` lists the folders whose notes hold Prompt, Extract, Mark, and Script sections. `node tools/resolve.test.js` tests the resolver.
 

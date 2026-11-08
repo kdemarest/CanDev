@@ -16,3 +16,9 @@
 - Each plugin's `build.sh` runs `tools/jsload.js` (fake-Obsidian load test: construct, onload, onunload). If a bundle uses an Obsidian export the fake lacks, add it to the fake.
 - `jsload --test <expr>` also runs a plugin's in-bundle test suite (movi: `Movi.Test.runAll()`, parser + logger); add tests there when changing the parser.
 - Tool packages install to `~/.local/share/devenv-tools` via `setup.sh` (node_modules can't live on sdcard).
+
+## Showing Ken images
+- Write any image Ken should look at (a model preview, a render, a comparison) to `/sdcard/Download/preview.png`, overwriting it each time; several views go side by side in that one file (`magick a.png b.png +append`). Ken opens it from Downloads; long paths are hard to copy on the phone.
+
+## Toolchain speed
+- Game development speed is directly proportional to the speed and effectiveness of the toolchain, so optimizing tools matters a lot (Ken, 2026-11-04). When a tool Ken waits on (a build, an install, a Tweak drag, a scene load) is slow, measure where the time goes and propose speedups; prefer caching what didn't change, using every core, and vectorizing (numpy is fine) over waiting.

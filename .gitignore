@@ -12,6 +12,7 @@
 /ObAiChat/
 /workout/
 /lens/
+/smash/
 
 # Our plugins are built into the vault by setup.sh / build.sh.
 /.obsidian/plugins/gptviz/
