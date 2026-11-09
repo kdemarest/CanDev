@@ -22,6 +22,12 @@ for cmd in git node npm python3 magick gh glslangValidator mcs javac aapt aapt2 
 done
 # modl's model scripts paint their textures with numpy (Termux's package; pip can't build it here)
 python3 -c "import numpy" 2>/dev/null || { echo "Missing numpy. Run: pkg install python-numpy" >&2; exit 1; }
+# Medical reads MRI DICOM (pydicom); Resoscan's are JPEG-LS, decoded by pylibjpeg-libjpeg. No Android
+# wheel exists, so it compiles with clang (~1.5 min). --no-build-isolation keeps pip from building numpy.
+if ! python3 -c "import pydicom, libjpeg" 2>/dev/null; then
+  pip install pydicom cython poetry-core setuptools
+  pip install --no-build-isolation --no-deps pylibjpeg pylibjpeg-libjpeg
+fi
 
 if [ -z "$(git config --global user.name || true)" ]; then
   read -rp "Git user name: " name
