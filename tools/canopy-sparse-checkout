@@ -163,6 +163,11 @@
 /Assets/Modl/
 # Canopy root ignore rules (git only honours them when checked out)
 /.gitignore
+# the Unity project's own files (Ken, 2026-11-09): its settings (build list, tags and layers, physics,
+# quality, graphics...) and its packages, 29 small files
+/ProjectSettings/
+/Packages/manifest.json
+/Packages/packages-lock.json
 # new assets made on the phone (modl families, layout placeholders, leaf LODs, far stand-ins)
 /Assets/Modl.meta
 /Assets/Placeholder/

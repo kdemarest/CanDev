@@ -20,3 +20,10 @@ public static class ForEachComponent
 	public static System.Collections.Generic.IEnumerable<T> ComponentsAll<T>(this GameObject go, bool includeInactive = true) where T : Component => null;
 	public static Chunk chunk(this GameObject go) => null;
 }
+// SearchComponents.cs (Canopy's heap-safe searches; never Unity's: Ken, 2026-11-09)
+public static class SearchComponents
+{
+	public static T FindComponentInSelfOrParents<T>(this GameObject obj) where T : Component => null;
+}
+// Tags.cs
+public static class Tags { public static bool IsEditorOnly(this GameObject gameObject) => false; }

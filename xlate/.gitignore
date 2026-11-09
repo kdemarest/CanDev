@@ -1,0 +1,3 @@
+# Build output stays in ~/.cache; models and the API key live on the phone, never in the repo.
+*.apk
+*.bin
