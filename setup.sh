@@ -20,6 +20,12 @@ PLUGINS=(gptviz movi modl edtabs ObAiChat)
 for cmd in git node npm python3 magick gh glslangValidator mcs javac aapt aapt2 d8 apksigner clang cmake make; do
   command -v "$cmd" >/dev/null || { echo "Missing $cmd. Run: pkg install git nodejs python python-numpy imagemagick gh glslang mono openjdk-21 aapt aapt2 d8 apksigner clang cmake make" >&2; exit 1; }
 done
+# Notifications (lens/drive.js asks Ken to wake the phone when Ocular is away; Ken, 2026-11-10): the
+# termux-api package's commands, and the Termux:API app they talk to (without it they hang). The app
+# must come from the same source as Termux (F-Droid here: their signatures must match), so it is
+# installed by hand: https://f-droid.org/packages/com.termux.api/
+command -v termux-notification >/dev/null || { echo "Missing termux-notification. Run: pkg install termux-api" >&2; exit 1; }
+pm list packages com.termux.api 2>/dev/null | grep -q "package:com.termux.api$" || { echo "Missing the Termux:API app: install it from F-Droid (https://f-droid.org/packages/com.termux.api/), the same source as Termux" >&2; exit 1; }
 # modl's model scripts paint their textures with numpy (Termux's package; pip can't build it here)
 python3 -c "import numpy" 2>/dev/null || { echo "Missing numpy. Run: pkg install python-numpy" >&2; exit 1; }
 # Medical reads MRI DICOM (pydicom); Resoscan's are JPEG-LS, decoded by pylibjpeg-libjpeg. No Android
@@ -201,6 +207,10 @@ printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/lens/runLens.s
 chmod +x "$HOME/.local/bin/runLens"
 printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: start the Lens bridge and open Lens.\n~/.local/bin/runLens\n' > "$HOME/.shortcuts/runLens"
 chmod +x "$HOME/.shortcuts/runLens"
+# runOcular: the Termux Claude's own test browser (Ken, 2026-11-10), a separate app (bash lens/build.sh
+# --ocular) with its own bridge, so testing never touches Lens; lens/drive.js drives it.
+printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/lens/runLens.sh" --ocular "$@"\n' "$DEV" > "$HOME/.local/bin/runOcular"
+chmod +x "$HOME/.local/bin/runOcular"
 # backupPhone pushes every Canopy repo's uncommitted work to its backup/phone branch (tools/backup.sh); also a widget button.
 printf '#!/data/data/com.termux/files/usr/bin/bash\n# Termux:Widget shortcut: push uncommitted Canopy work to backup/phone branches on GitHub.\nbash "%s/tools/backup.sh"\nread -rp "Press Enter to close."\n' "$DEV" > "$HOME/.shortcuts/backupPhone"
 chmod +x "$HOME/.shortcuts/backupPhone"

@@ -27,7 +27,7 @@ A fallback hides the real bug: a stale page, a reader that broke, a renamed file
 - Tool packages install to `~/.local/share/devenv-tools` via `setup.sh` (node_modules can't live on sdcard).
 
 ## Sites that work in Ken's browser but refuse scripts
-- Don't reverse-engineer them. If Ken can open the page, open it in Lens (`runLens --no-claude --mini <url>`, then `node lens/drive.js`), a real browser, and take what the page itself loads. Its downloads keep the session.
+- Don't reverse-engineer them. If Ken can open the page, open it in Ocular (`runOcular <url>`, then `node lens/drive.js`; Ocular is Claude's own copy of Lens, never Ken's Lens), a real browser, and take what the page itself loads. Its downloads keep the session.
 
 ## Installing Python packages
 - Termux has no prebuilt wheels for many packages, so pip compiles them with clang. Never let pip rebuild numpy: use Termux's `python-numpy`, and install with `--no-build-isolation --no-deps`, after installing the build tools that package names. Run long installs in the background with a log.
