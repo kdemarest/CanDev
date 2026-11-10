@@ -25,6 +25,7 @@ A fallback hides the real bug: a stale page, a reader that broke, a renamed file
 - Each plugin's `build.sh` runs `tools/jsload.js` (fake-Obsidian load test: construct, onload, onunload). If a bundle uses an Obsidian export the fake lacks, add it to the fake.
 - `jsload --test <expr>` also runs a plugin's in-bundle test suite (movi: `Movi.Test.runAll()`, parser + logger); add tests there when changing the parser.
 - Tool packages install to `~/.local/share/devenv-tools` via `setup.sh` (node_modules can't live on sdcard).
+- `ktcheck smash` (`tools/ktcheck`) after Kotlin edits in smash: type-checks it against android.jar and its Gradle dependencies, no Gradle; fix errors before handing it to a build.
 
 ## Sites that work in Ken's browser but refuse scripts
 - Don't reverse-engineer them. If Ken can open the page, open it in Ocular (`runOcular <url>`, then `node lens/drive.js`; Ocular is Claude's own copy of Lens, never Ken's Lens), a real browser, and take what the page itself loads. Its downloads keep the session.

@@ -182,6 +182,13 @@ fi
 # sdcard is mounted noexec, so the command on PATH runs the tracked script through bash.
 printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/tools/jslint" "$@"\n' "$DEV" > "$HOME/.local/bin/jslint"
 chmod +x "$HOME/.local/bin/jslint"
+# ktcheck: type-checks smash's Kotlin on the phone, no Gradle (tools/ktcheck/README.md); --prepare
+# downloads android.jar and smash's dependencies and builds the compile server, once
+command -v kotlinc >/dev/null || { echo "Missing kotlinc. Run: pkg install kotlin" >&2; exit 1; }
+printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/tools/ktcheck/ktcheck.sh" "$@"\n' "$DEV" > "$HOME/.local/bin/ktcheck"
+chmod +x "$HOME/.local/bin/ktcheck"
+[ -d "$DEV/smash" ] || { echo "setup: smash isn't cloned, so ktcheck can't prepare for it" >&2; exit 1; }
+bash "$DEV/tools/ktcheck/ktcheck.sh" --prepare "$DEV/smash"
 # runLayout starts layout in the background (auto-restarting on edits); also a Termux:Widget button.
 printf '#!/data/data/com.termux/files/usr/bin/bash\nexec bash "%s/layout/runLayout.sh" "$@"\n' "$DEV" > "$HOME/.local/bin/runLayout"
 chmod +x "$HOME/.local/bin/runLayout"
